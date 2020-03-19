@@ -181,9 +181,6 @@ Getting Started.
 // _tWinMain, that _t part is from tchar.h.
 #include <tchar.h>
 
-// Main loop timer dependency.
-#include <chrono>
-
 /* API Design-Implementation. Start here. */
 
 extern void init();
