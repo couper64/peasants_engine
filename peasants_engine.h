@@ -181,6 +181,9 @@ Getting Started.
 // _tWinMain, that _t part is from tchar.h.
 #include <tchar.h>
 
+// Console debug I/O.
+#include <stdio.h>
+
 /* API Design-Implementation. Start here. */
 
 extern void init();
@@ -192,6 +195,24 @@ extern void draw();
 
 const TCHAR PE_WNDCLASSEX_NAME[] = TEXT("PE_WNDCLASSEX_NAME");
 const TCHAR PE_WINDOWEX_NAME[] = TEXT("Made by Peasants Engine");
+const TCHAR PE_CONSOLETITLE_NAME[] = TEXT("Console for Peasants Engine");
+
+// The string that indicates the name of the company whose OpenGL 
+// implementation you are using. (Benstead, L. 2009).
+const GLubyte* PE_GL_VENDOR;
+
+// The string that usually reflects the hardware being used. 
+// (Benstead, L. 2009).
+const GLubyte* PE_GL_RENDERER;
+
+// The string contains a version number in the form of either 
+// major_number.minor_number or major_number.minor_number.release_number. 
+// (Benstead, L. 2009).
+const GLubyte* PE_GL_VERSION;
+
+// The string returned contains a space-delimited list of all of the available 
+// OpenGL extensions. (Benstead L. 2009).
+const GLubyte* PE_GL_EXTENSIONS;
 
 const PIXELFORMATDESCRIPTOR PE_PFD
 {
@@ -281,6 +302,7 @@ const PIXELFORMATDESCRIPTOR PE_PFD
 
 /* Global engine variables. Start here. */
 
+// Window RECT information when it's not maximised.
 RECT peWindowedModeRect = { NULL };
 
 /* Global engine variables. End here. */
@@ -324,6 +346,36 @@ bool peInit(HDC hDC)
 
 	// Default clear colour is opaque gray.
 	glClearColor(0.50f, 0.50f, 0.50f, 1.00f);
+
+	// Fill-up global OpenGL information.
+	PE_GL_VENDOR = glGetString(GL_VENDOR);
+	PE_GL_RENDERER = glGetString(GL_RENDERER);
+	PE_GL_VERSION = glGetString(GL_VERSION);
+	PE_GL_EXTENSIONS = glGetString(GL_EXTENSIONS);
+
+	// Notify developer about OpenGL status.
+	_tprintf_s(TEXT("GPU vendor: %hs \n"), PE_GL_VENDOR);
+	_tprintf_s(TEXT("GPU name: %hs \n"), PE_GL_RENDERER);
+	_tprintf_s(TEXT("OpenGL information: %hs \n"), PE_GL_VERSION);
+	_tprintf_s(TEXT("OpenGL extensions available: \n - "));
+
+	int characterIndex = 0;
+	char character = PE_GL_EXTENSIONS[characterIndex++];
+
+	while (character != '\0') 
+	{
+		if (character == ' ') 
+		{
+			_tprintf_s(TEXT("\n - "));
+		}
+		else 
+		{
+			_tprintf_s(TEXT("%c"), character);
+		}
+
+		character = PE_GL_EXTENSIONS[characterIndex++];
+	}
+	_tprintf_s(TEXT("\n"));
 
 	/* Default OpenGL settings. End here. */
 
@@ -564,6 +616,42 @@ INT APIENTRY _tWinMain
 	_In_ INT nCmdShow
 )
 {
+	/* Adding console output to the app. Start here. */
+
+	// If the function succeeds, the return value is nonzero.
+	// If the function fails, the return value is zero. 
+	// To get extended error information, call GetLastError.
+	BOOL isAlloc = AllocConsole();
+
+	// TO DO: Handle AllocaConsole failure.
+	if (!isAlloc) 
+	{
+		// Just terminate.
+		return (0);
+	}
+
+	// If the function succeeds, the return value is nonzero.
+	// If the function fails, the return value is zero. 
+	// To get extended error information, call GetLastError.
+	BOOL isConsoleTitleSet = SetConsoleTitle(PE_CONSOLETITLE_NAME);
+
+	// TO DO: Handle SetConsoleTitle failure.
+	if (!isConsoleTitleSet)
+	{
+		// Just terminate.
+		return (0);
+	}
+
+	// Re-purpose standard output file to use new console.
+	_tfreopen_s((FILE**)stdout, TEXT("CONOUT$"), TEXT("w"), stdout);
+
+	// Welcome message for a peasant.
+	_tprintf_s(TEXT("Peasants Engine [Version 1.0.0.0]\n"));
+	_tprintf_s(TEXT("(c) 2020 Vladislav Li. All rights reserved.\n\n"));
+	_tprintf_s(TEXT("Welcome back, peasant!\n\n"));
+
+	/* Adding console output to the app. End here. */
+
 	// Filling up the structure.
 	const WNDCLASSEX PE_WNDCLASSEX =
 	{
