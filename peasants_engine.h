@@ -359,23 +359,33 @@ bool peInit(HDC hDC)
 	_tprintf_s(TEXT("OpenGL information: %hs \n"), PE_GL_VERSION);
 	_tprintf_s(TEXT("OpenGL extensions available: \n - "));
 
-	int characterIndex = 0;
-	char character = PE_GL_EXTENSIONS[characterIndex++];
-
-	while (character != '\0') 
+	// An infinite loop to show all extensions in a readable format.
+	for (int i = 0;; i++) 
 	{
-		if (character == ' ') 
+		// Until we reach the end of the string.
+		if (PE_GL_EXTENSIONS[i] == '\0') 
 		{
+			// Add a new line.
+			_tprintf_s(TEXT("\n"));
+
+			// And, leave the loop.
+			break;
+		}
+
+		// Words are separated by 'space'.
+		else if (PE_GL_EXTENSIONS[i] == ' ') 
+		{
+			// Format output to make it readable.
 			_tprintf_s(TEXT("\n - "));
 		}
-		else 
-		{
-			_tprintf_s(TEXT("%c"), character);
-		}
 
-		character = PE_GL_EXTENSIONS[characterIndex++];
+		// In other cases.
+		else
+		{
+			// Output character.
+			_tprintf_s(TEXT("%c"), PE_GL_EXTENSIONS[i]);
+		}
 	}
-	_tprintf_s(TEXT("\n"));
 
 	/* Default OpenGL settings. End here. */
 
@@ -608,6 +618,8 @@ LRESULT CALLBACK peWindowProc
 	return(DefWindowProc(hWnd, uMsg, wParam, lParam));
 }
 
+/* Operating System Layer. Below this line. */
+
 INT APIENTRY _tWinMain
 (
 	_In_ HINSTANCE hInstance,
@@ -623,7 +635,7 @@ INT APIENTRY _tWinMain
 	// To get extended error information, call GetLastError.
 	BOOL isAlloc = AllocConsole();
 
-	// TO DO: Handle AllocaConsole failure.
+	// TO DO: Handle AllocConsole failure.
 	if (!isAlloc) 
 	{
 		// Just terminate.
