@@ -307,7 +307,7 @@ RECT peWindowedModeRect = { NULL };
 
 /* Global engine variables. End here. */
 
-bool peInit(HDC hDC) 
+bool peWin32Init(HDC hDC) 
 {
 	// If the function succeeds, the return value is a valid handle to an 
 	// OpenGL rendering context.
@@ -399,7 +399,7 @@ bool peInit(HDC hDC)
 	return true;
 }
 
-bool peDestroy(HDC hDC, HGLRC hGLRC) 
+bool peWin32Destroy(HDC hDC, HGLRC hGLRC) 
 {
 	// When the wglMakeCurrent function succeeds, the return value is TRUE; 
 	// otherwise the return value is FALSE.To get extended error information, 
@@ -520,7 +520,7 @@ void peOnWindowMessageCreate
 
 	// Using non-Win32 standard bool, because that's our custom 
 	// "cross-platform" function.
-	bool didEngineInit = peInit(hDC);
+	bool didEngineInit = peWin32Init(hDC);
 
 	// TO DO: Handle peInit failure.
 	if (!didEngineInit)
@@ -539,7 +539,7 @@ void peOnWindowMessageDestroy(HWND hWnd)
 
 	// Using non-Win32 standard bool, because that's our custom 
 	// "cross-platform" function.
-	bool didEngineDestroy = peDestroy(hDC, hGLRC);
+	bool didEngineDestroy = peWin32Destroy(hDC, hGLRC);
 
 	// TO DO: Handle peDestroy failure.
 	if (!didEngineDestroy)
@@ -762,7 +762,6 @@ INT APIENTRY _tWinMain
 
 	// Make window visible to the user.
 	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
 
 	// Simple message processing.
 	MSG msg = {};
