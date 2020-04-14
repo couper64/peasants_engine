@@ -184,6 +184,13 @@ Getting Started.
 // Console debug I/O.
 #include <stdio.h>
 
+// Special debugging routine for OpenGL functions.
+#ifdef _DEBUG
+#define DO(x, y) x; y;
+#else
+#define DO(x, y) x;
+#endif
+
 /* API Design-Implementation. Start here. */
 
 extern void init();
@@ -307,6 +314,48 @@ RECT peWindowedModeRect = { NULL };
 
 /* Global engine variables. End here. */
 
+void peLogGLError(GLenum errorCode) 
+{
+	switch (errorCode)
+	{
+		case (GL_NO_ERROR):
+			_tprintf_s(TEXT("GL_NO_ERROR\n"));
+			break;
+
+		case (GL_INVALID_ENUM): 
+			_tprintf_s(TEXT("Error encountered ... GL_INVALID_ENUM\n")); 
+			break;
+
+		case (GL_INVALID_VALUE): 
+			_tprintf_s(TEXT("Error encountered ... GL_INVALID_VALUE\n")); 
+			break;
+
+		case (GL_INVALID_OPERATION): 
+			_tprintf_s(TEXT("Error encountered ... GL_INVALID_OPERATION\n")); 
+			break;
+
+		case (GL_STACK_OVERFLOW):
+			_tprintf_s(TEXT("Error encountered ... GL_STACK_OVERFLOW\n"));
+			break;
+
+		case (GL_STACK_UNDERFLOW):
+			_tprintf_s(TEXT("Error encountered ... GL_STACK_UNDERFLOW\n"));
+			break;
+
+		case (GL_OUT_OF_MEMORY):
+			_tprintf_s(TEXT("Error encountered ... GL_OUT_OF_MEMORY\n"));
+			break;
+	}
+}
+
+void peLogGLErrors()
+{
+	while (GLenum errorCode = glGetError() != GL_NO_ERROR)
+	{
+		peLogGLError(errorCode);
+	}
+}
+
 bool peWin32Init(HDC hDC) 
 {
 	// If the function succeeds, the return value is a valid handle to an 
@@ -334,24 +383,40 @@ bool peWin32Init(HDC hDC)
 
 	/* Default OpenGL settings. Start here. */
 
+	// Setup OpenGL hints.
+	DO(glHint(GL_POINT_SMOOTH_HINT, GL_FASTEST), peLogGLErrors());
+	DO(glHint(GL_LINE_SMOOTH_HINT, GL_FASTEST), peLogGLErrors());
+	DO(glHint(GL_POLYGON_SMOOTH_HINT, GL_FASTEST), peLogGLErrors());
+	DO(glHint(GL_FOG_HINT, GL_FASTEST), peLogGLErrors());
+	DO(glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST), peLogGLErrors());
+
+	_tprintf_s(TEXT("GL_POINT_SMOOTH_HINT set to GL_FASTEST.\n"));
+	_tprintf_s(TEXT("GL_LINE_SMOOTH_HINT set to GL_FASTEST.\n"));
+	_tprintf_s(TEXT("GL_POLYGON_SMOOTH_HINT set to GL_FASTEST.\n"));
+	_tprintf_s(TEXT("GL_FOG_HINT set to GL_FASTEST.\n"));
+	_tprintf_s(TEXT("GL_PERSPECTIVE_CORRECTION_HINT set to GL_FASTEST.\n"));
+
 	// Culling is ON.
-	glEnable(GL_CULL_FACE);
+	DO(glEnable(GL_CULL_FACE), peLogGLErrors());
+
+	// Point smoothing is OFF.
+	DO(glDisable(GL_POINT_SMOOTH), peLogGLErrors());
 
 	// Back culling is default.
-	glCullFace(GL_BACK);
+	DO(glCullFace(GL_BACK), peLogGLErrors());
 
 	// Front of the polygon considered from counter-clockwise 
 	// winding as a default.
-	glFrontFace(GL_CCW);
+	DO(glFrontFace(GL_CCW), peLogGLErrors());
 
 	// Default clear colour is opaque gray.
-	glClearColor(0.50f, 0.50f, 0.50f, 1.00f);
+	DO(glClearColor(0.50f, 0.50f, 0.50f, 1.00f), peLogGLErrors());
 
 	// Fill-up global OpenGL information.
-	PE_GL_VENDOR = glGetString(GL_VENDOR);
-	PE_GL_RENDERER = glGetString(GL_RENDERER);
-	PE_GL_VERSION = glGetString(GL_VERSION);
-	PE_GL_EXTENSIONS = glGetString(GL_EXTENSIONS);
+	PE_GL_VENDOR = DO(glGetString(GL_VENDOR), peLogGLErrors());
+	PE_GL_RENDERER = DO(glGetString(GL_RENDERER), peLogGLErrors());
+	PE_GL_VERSION = DO(glGetString(GL_VERSION), peLogGLErrors());
+	PE_GL_EXTENSIONS = DO(glGetString(GL_EXTENSIONS), peLogGLErrors());
 
 	// Notify developer about OpenGL status.
 	_tprintf_s(TEXT("GPU vendor: %hs \n"), PE_GL_VENDOR);
