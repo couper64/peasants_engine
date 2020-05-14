@@ -122,7 +122,7 @@ Getting Started.
 - Set Linker/System/Subsystem in VS Community to Windows.
 - Add to Linker/General/Additional Library Directories -> C:\Windows\System32;
 - Add to Linker/Input/Additional Dependencies -> opengl32.lib; glu32.lib;
-- Include "peasnats_engine.h" into any *.cpp file.
+- Include "peasants_engine.h" into any *.cpp file.
 - Implement init(void) and draw(void) functions in the *.cpp file.
 - Run your application. ESC - to exit and F1 - to toggle fullscreen.
 
