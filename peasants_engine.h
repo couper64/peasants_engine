@@ -126,6 +126,11 @@ Getting Started.
 - Implement init(void) and draw(void) functions in the *.cpp file.
 - Run your application. ESC - to exit and F1 - to toggle fullscreen.
 
+- Do option 1 or option 2:
+	- Option 1, set C/C++/General/Additional Include Directories
+		-> %ENGINEPATH%/include
+	- Option 2, copy %ENGINEPATH%/include/* to your project folder.
+
 */
 
 #pragma once
@@ -174,6 +179,7 @@ Getting Started.
 // from 48476 to 26104 lines after preprocessing
 #define WIN32_LEAN_AND_MEAN
 #define WIN32_EXTRA_LEAN
+#define STRICT
 #include <windows.h>
 
 // OpenGL functionality.
