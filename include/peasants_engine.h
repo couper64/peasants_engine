@@ -135,52 +135,9 @@ Getting Started.
 
 #pragma once
 
-// from 76896 to 48476 lines after preprocessing
-#define NOGDICAPMASKS    
-//#define NOVIRTUALKEYCODES // VK_ESCAPE
-//#define NOWINMESSAGES // WM_DESTROY, WM_SIZE, WM_CREATE, WM_KEYDOWN
-//#define NOWINSTYLES // WS_OVERLAPPEDWINDOW
-// #define NOSYSMETRICS // GetSystemMetrics
-#define NOMENUS          
-//#define NOICONS // IDI_APPLICATION
-#define NOKEYSTATES      
-#define NOSYSCOMMANDS    
-#define NORASTEROPS      
-#define NOSHOWWINDOW     
-#define OEMRESOURCE      
-#define NOATOM           
-#define NOCLIPBOARD      
-//#define NOCOLOR // COLOR_WINDOW
-#define NOCTLMGR         
-#define NODRAWTEXT       
-//#define NOGDI // GetStockObject
-#define NOKERNEL         
-//#define NOUSER // WNDCLASSEX, CW_USEDEFAULT, PAINTSTRUCT
-#define NONLS            
-#define NOMB             
-#define NOMEMMGR         
-#define NOMETAFILE       
-#define NOMINMAX         
-//#define NOMSG // MSG, GetMessage, TranslateMessage, DispatchMessage
-#define NOOPENFILE       
-#define NOSCROLL         
-#define NOSERVICE        
-#define NOSOUND          
-#define NOTEXTMETRIC     
-#define NOWH             
-//#define NOWINOFFSETS SetWindowLongPtr
-#define NOCOMM           
-#define NOKANJI          
-#define NOHELP           
-#define NOPROFILER       
-#define NODEFERWINDOWPOS 
-#define NOMCX            
-
-// from 48476 to 26104 lines after preprocessing
-#define WIN32_LEAN_AND_MEAN
-#define WIN32_EXTRA_LEAN
-#define STRICT
-#include <windows.h>
+// Separated windows inclusion, because it is going to be included in 
+// multiple files.
+#include "peasants_windows.h"
 
 // OpenGL functionality.
 #include <gl/GL.h>
