@@ -135,13 +135,8 @@ Getting Started.
 
 #pragma once
 
-// Separated windows inclusion, because it is going to be included in 
-// multiple files.
-#include "peasants_windows.h"
-
-// OpenGL functionality.
-#include <gl/GL.h>
-#include <gl/GLU.h>
+// A list of functions to access platform features.
+#include "peasants_library.h"
 
 // _tWinMain, that _t part is from tchar.h.
 #include <tchar.h>
@@ -164,108 +159,6 @@ extern void draw();
 /* API Design-Implementation. End here. */
 
 /* Global engine constants. Start here. */
-
-const TCHAR PE_WNDCLASSEX_NAME[] = TEXT("PE_WNDCLASSEX_NAME");
-const TCHAR PE_WINDOWEX_NAME[] = TEXT("Made by Peasants Engine");
-const TCHAR PE_CONSOLETITLE_NAME[] = TEXT("Console for Peasants Engine");
-
-// The string that indicates the name of the company whose OpenGL 
-// implementation you are using. (Benstead, L. 2009).
-const GLubyte* PE_GL_VENDOR;
-
-// The string that usually reflects the hardware being used. 
-// (Benstead, L. 2009).
-const GLubyte* PE_GL_RENDERER;
-
-// The string contains a version number in the form of either 
-// major_number.minor_number or major_number.minor_number.release_number. 
-// (Benstead, L. 2009).
-const GLubyte* PE_GL_VERSION;
-
-// The string returned contains a space-delimited list of all of the available 
-// OpenGL extensions. (Benstead L. 2009).
-const GLubyte* PE_GL_EXTENSIONS;
-
-const PIXELFORMATDESCRIPTOR PE_PFD
-{
-	// nSize.
-	sizeof(PIXELFORMATDESCRIPTOR),
-
-	// nVersion, always set to 1.
-	1,
-
-	// dwFlags. dw - double word, DWORD. Flags for pixel buffer properties.
-	PFD_DRAW_TO_BITMAP | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
-
-	// iPixelType. Type of pixel data.
-	PFD_TYPE_RGBA,
-
-	// cColorBits. Number of bits per pixel.
-	32,
-
-	// cRedBits. Number of red bits.
-	0,
-
-	// cRedShift. Shift count for red bits.
-	0,
-
-	// cGreenBits. Number of green bits.
-	0,
-
-	// cGreenShift. Shift count for red bits.
-	0,
-
-	// cBlueBits. Number of blue bits.
-	0,
-
-	// cBlueShift. Shift count for red bits.
-	0,
-
-	// cAlphaBits. Number of alpha bits.
-	0,
-
-	// cAlphaShift. Shift count for red bits.
-	0,
-
-	// cAccumBits. Number of accumulation buffer bits.
-	0,
-
-	// cAccumRedBits. Number of red accumulation bits.
-	0,
-
-	// cAccumGreenBits. Number of green accumulation bits.
-	0,
-
-	// cAccumBlueBits. Number of blue accumulation bits.
-	0,
-
-	// cAccumAlphaBits. Number of alpha accumulation bits.
-	0,
-
-	// cDepthBits. Number of depth buffer bits.
-	24,
-
-	// cStencilBits. Number of stencil buffer bits.
-	0,
-
-	// cAuxBuffers. Number of auxiliary buffer bits. Not supported.
-	0,
-
-	// iLayerType. No longer used.
-	PFD_MAIN_PLANE,
-
-	// bReserved. Number of overlay and underlay planes.
-	0,
-
-	// dwLayerMask. No longer used.
-	0,
-
-	// dwVisibleMask. Transparent underlay plane color.
-	0,
-
-	// dwDamageMask. No longer used.
-	0
-};
 
 /* Global engine constants. End here. */
 

@@ -80,3 +80,92 @@ https://docs.microsoft.com/en-us/windows/win32/winprog/enabling-strict
 #define WIN32_EXTRA_LEAN
 #define STRICT
 #include <windows.h>
+
+/* Global WIN32 engine variables. Start here. */
+
+const TCHAR PE_WNDCLASSEX_NAME[] = TEXT("PE_WNDCLASSEX_NAME");
+const TCHAR PE_WINDOWEX_NAME[] = TEXT("Made by Peasants Engine");
+const TCHAR PE_CONSOLETITLE_NAME[] = TEXT("Console for Peasants Engine");
+
+const PIXELFORMATDESCRIPTOR PE_PFD
+{
+	// nSize.
+	sizeof(PIXELFORMATDESCRIPTOR),
+
+	// nVersion, always set to 1.
+	1,
+
+	// dwFlags. dw - double word, DWORD. Flags for pixel buffer properties.
+	PFD_DRAW_TO_BITMAP | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+
+	// iPixelType. Type of pixel data.
+	PFD_TYPE_RGBA,
+
+	// cColorBits. Number of bits per pixel.
+	32,
+
+	// cRedBits. Number of red bits.
+	0,
+
+	// cRedShift. Shift count for red bits.
+	0,
+
+	// cGreenBits. Number of green bits.
+	0,
+
+	// cGreenShift. Shift count for red bits.
+	0,
+
+	// cBlueBits. Number of blue bits.
+	0,
+
+	// cBlueShift. Shift count for red bits.
+	0,
+
+	// cAlphaBits. Number of alpha bits.
+	0,
+
+	// cAlphaShift. Shift count for red bits.
+	0,
+
+	// cAccumBits. Number of accumulation buffer bits.
+	0,
+
+	// cAccumRedBits. Number of red accumulation bits.
+	0,
+
+	// cAccumGreenBits. Number of green accumulation bits.
+	0,
+
+	// cAccumBlueBits. Number of blue accumulation bits.
+	0,
+
+	// cAccumAlphaBits. Number of alpha accumulation bits.
+	0,
+
+	// cDepthBits. Number of depth buffer bits.
+	24,
+
+	// cStencilBits. Number of stencil buffer bits.
+	0,
+
+	// cAuxBuffers. Number of auxiliary buffer bits. Not supported.
+	0,
+
+	// iLayerType. No longer used.
+	PFD_MAIN_PLANE,
+
+	// bReserved. Number of overlay and underlay planes.
+	0,
+
+	// dwLayerMask. No longer used.
+	0,
+
+	// dwVisibleMask. Transparent underlay plane color.
+	0,
+
+	// dwDamageMask. No longer used.
+	0
+};
+
+/* Global WIN32 engine variables. End here. */
