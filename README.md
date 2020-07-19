@@ -4,8 +4,6 @@ Written in C/C++ header files.
 
 Supporting Windows.
 
-My personal reasons to code an engine are to learn the best programming practices, improve my skills and make retro games.
-
 Roadmap:
  * Deepen Win32 integration.
  * Design game engine artchitecture. Research is based on book "Game Engine Architecture" by Jason Gregory.
