@@ -337,6 +337,13 @@ const GLubyte* PE_GL_EXTENSIONS;
 //}
 #pragma endregion peasants engine opengl
 
+/* API Design-Implementation. Start here. */
+
+extern void init();
+extern void draw();
+
+/* API Design-Implementation. End here. */
+
 #pragma region pelibrary
 //{ pelibrary region header.
 
@@ -559,6 +566,27 @@ void peDraw(HDC hDC)
 	SwapBuffers(hDC);
 }
 
+void peDrawPoints
+(
+	float vertices[], 
+	float colors[],
+	const size_t arraySize,
+	float pointSize
+)
+{
+	glPointSize(pointSize);
+
+	glBegin(GL_POINTS);
+
+	for (size_t i = 0; i < arraySize; i += 3)
+	{
+		glColor3f(colors[i], colors[i + 1], colors[i + 2]);
+		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+	}
+
+	glEnd();
+}
+
 void peToggleFullscreen()
 {
 	HWND hWnd = GetActiveWindow();
@@ -734,13 +762,6 @@ LRESULT CALLBACK peWindowProc
 
 //}
 #pragma endregion peasants engine c-library
-
-/* API Design-Implementation. Start here. */
-
-extern void init();
-extern void draw();
-
-/* API Design-Implementation. End here. */
 
 /* Global engine constants. Start here. */
 
